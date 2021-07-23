@@ -1,0 +1,4 @@
+credentials/admin.json
+credentials/.env
+.vscode/
+node_modules/
