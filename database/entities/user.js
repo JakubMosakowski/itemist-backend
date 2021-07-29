@@ -1,27 +1,43 @@
-import { db } from "../db.js"
+import { db, parseSnapshotWithOneValue } from "../db.js"
 
-export function addUser(name, avatarUrl) {
+export async function addUser(username, email, password) {
 
-    const usersRef = db.ref().child(`users`);
+    const ref = db
+        .ref()
+        .child("users");
 
     console.log("Create new user entity...")
-    var newUserEntityRef = usersRef.push();
+    const newUserEntityRef = ref.push();
     const user = {
-        avatarUrl,
-        name,
-        id: newUserEntityRef.key
+        id: newUserEntityRef.key,
+        username,
+        email,
+        password
     }
 
-    console.log("Fill user entity with data...")
-    newUserEntityRef.set(user, onAddUserCompleted)
+    return await newUserEntityRef.set(user)
 }
 
-function onAddUserCompleted(error) {
-    if (error) {
-        console.log("Something went wrong during user creation:")
-        console.log(error)
-    }
-    else {
-        console.log("Successfully added a user!")
-    }
+
+export async function userExists(email) {
+    let exists = await getUser(email)
+
+    return exists
+}
+
+export async function getUser(email) {
+
+    console.log(`Getting ${email} user entity...`)
+
+    const ref = db
+        .ref()
+        .child("users")
+        .orderByChild("email")
+        .equalTo(email.toLowerCase())
+        .limitToFirst(1)
+
+    // Get user.
+    const snapshot = await ref.get()
+
+    return parseSnapshotWithOneValue(snapshot)
 }
