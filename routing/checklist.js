@@ -9,7 +9,7 @@ router.get(
 
         res
             .status(200)
-            .json()
+            .json("Works")
     }
 )
 
