@@ -1,5 +1,5 @@
 import admin from 'firebase-admin'
-import config from '../credentials/dbconfig.js'
+import config from '../config/dbconfig.js'
 
 admin.initializeApp(config());
 export const db = admin.database()

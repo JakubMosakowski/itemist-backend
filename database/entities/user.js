@@ -19,7 +19,9 @@ export async function addUser(username, email, password) {
         password: hashedPassword
     }
 
-    return await newUserEntityRef.set(user)
+    await newUserEntityRef.set(user)
+
+    return user
 }
 
 

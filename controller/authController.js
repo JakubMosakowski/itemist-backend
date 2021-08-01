@@ -17,8 +17,6 @@ export function validate(method) {
     }
 }
 
-//TODO add jwt handling on some routes
-//TODO save JWT in db?
 export async function login(req, res, next) {
     try {
         const errors = validationResult(req);
@@ -51,7 +49,7 @@ export async function login(req, res, next) {
     }
 }
 
-function generateLoginResponse(user) {
+export function generateLoginResponse(user) {
     const jwtData = { user: user.email }
 
     // Don't send user's password even if it's hashed.

@@ -1,4 +1,4 @@
-credentials/admin.json
-credentials/.env
+config/admin.json
+config/.env
 .vscode/
 node_modules/
