@@ -1,4 +1,5 @@
 import { db, parseSnapshotWithOneValue } from "../db.js"
+import { hashPassword } from "../../auth/password.js"
 
 export async function addUser(username, email, password) {
 
@@ -8,11 +9,14 @@ export async function addUser(username, email, password) {
 
     console.log("Create new user entity...")
     const newUserEntityRef = ref.push();
+
+    const hashedPassword = await hashPassword(password)
+
     const user = {
         id: newUserEntityRef.key,
         username,
         email,
-        password
+        password: hashedPassword
     }
 
     return await newUserEntityRef.set(user)
